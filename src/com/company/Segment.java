@@ -1,9 +1,10 @@
 package com.company;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Segment {
+public class Segment implements Serializable {
     static private Point staticStartPoint = new Point(0,0);
     static public Map<Integer,Segment> segmentsMap = new HashMap<>();
 
@@ -93,4 +94,16 @@ public class Segment {
         }
         count -= size - num + 1;
     }
+    public static void writeSegmentsMapToFile() throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                new FileOutputStream(new File("temp.txt")));
+        objectOutputStream.writeObject(segmentsMap);
+    }
+    public static void readSegmentsMapToFile() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(
+                new FileInputStream(new File("temp.txt")));
+        Map<Integer, Segment> map =(HashMap) objectInputStream.readObject();
+        segmentsMap = map;
+    }
+
 }
