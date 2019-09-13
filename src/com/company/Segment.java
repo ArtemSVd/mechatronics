@@ -1,42 +1,71 @@
 package com.company;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Segment {
     static private Point staticStartPoint = new Point(0,0);
+    static public Map<Integer,Segment> segmentsMap = new HashMap<>();
+
+    static private int count = 0;
+    public static int getCount() {
+        return count;
+    }
 
     private Point startPoint;
     private Point endPoint;
-    private int weight;
+
+    private double  weight;
+    private double length;
+    private double angle;
+
     private double centerOfMass;
 
-    public Segment(Point endPoint, int weight) {
-        startPoint = staticStartPoint;
-        this.endPoint = endPoint;
+    // Конструктор приватный -> можем использовать его только в классе
+    private Segment(double length, double weight, double angle) {
         this.weight = weight;
-        staticStartPoint = endPoint;
-        centerOfMass = calcCenterOfMass();
+        this.length = length;
+        this.angle = angle;
     }
+    // Метод, который возвращает объект
+    public static Segment getObject(double length,double weight, double angle){
+        // Конструируем объект
+        Segment segment = new Segment(length, weight, angle);
+        segment.setStartPoint();
+        segment.setEndPoint();
+        segment.calcCenterOfMass();
+        // Добавляем каждый созданный объект в мапу
+        segmentsMap.put(++count,segment);
+        // Возвращаем сконструированный объект
+        return segment;
+    }
+
 
     public Point getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
+    private void setStartPoint() {
+        // Установка стартовой точки для объекта (конечная точка предыдущего объекта)
+        startPoint = staticStartPoint;
     }
 
     public Point getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
+    private void setEndPoint() {
+        // Как то рассчитываем конечную точку
+
+        // Устанавливаем стартовую точку для следующего объекта
+        staticStartPoint = endPoint;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -46,5 +75,22 @@ public class Segment {
 
     public double calcCenterOfMass() {
         return 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return "Segment{" +
+                "weight=" + weight +
+                ", length=" + length +
+                '}';
+    }
+
+    // Статический метод для каскадного удаления объектов
+    public static void deleteObjectFromMap(int num){
+        int size = segmentsMap.size();
+        for(int i = num; i <= size;i++) {
+            segmentsMap.remove(i);
+        }
+        count -= size - num + 1;
     }
 }
