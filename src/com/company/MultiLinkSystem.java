@@ -3,15 +3,18 @@ package com.company;
 import com.company.exception.JointInstallationException;
 import com.company.elements.Joint;
 import com.company.elements.Segment;
+import com.company.service.Point;
 import com.company.service.SystemElement;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.DoubleToIntFunction;
 
 public class MultiLinkSystem {
 
      private Map<Integer, SystemElement> elementsMap = new HashMap<>();
-     private int count = 0;
+     private Point systemCenterMass;
+     private int count = 0; // Кол-во всех элементов (Segments. Joints)
      private static MultiLinkSystem instance;
 
     public MultiLinkSystem() { }  // Приватный конструктор(объект нельзя создать через new)
@@ -57,4 +60,25 @@ public class MultiLinkSystem {
     public SystemElement getElement(int elemNumber){
         return elementsMap.get(elemNumber);
     }
+
+    private void setSystemCenterMass(){
+        double summOfMass = 0;
+        double multOfMassX = 0;
+        double multOfMassY = 0;
+
+        for (int i = 1; i <= count; i++) {
+            int x = getElement(i).getCenterMass().getX();
+            double weight = getElement(i).getWeight();
+            summOfMass += weight;
+            multOfMassX += weight*x;
+
+            int y = getElement(i).getCenterMass().getY();
+            multOfMassY += weight*x;
+        }
+        int x = (int)(multOfMassX/summOfMass);
+        int y = (int)(multOfMassY/summOfMass);
+
+        systemCenterMass = new Point (x,y);
+    }
+
 }

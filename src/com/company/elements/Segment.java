@@ -16,6 +16,7 @@ public class Segment implements Serializable, SystemElement {
 
     private Point startPoint;
     private Point endPoint;
+    private Point centerMass;
 
     private double  weight;
     private double length;
@@ -71,6 +72,18 @@ public class Segment implements Serializable, SystemElement {
         startPoint = staticStartPoint;
     }
 
+    public void setCenterMass() {
+        int ax = startPoint.getX();
+        int ay = startPoint.getY();
+        int bx = endPoint.getX();
+        int by = endPoint.getY();
+
+        int x = (ax + bx)/2;
+        int y = (ay + by)/2;
+
+        centerMass = new Point(x,y);
+    }
+
     public Point getEndPoint() {
         return endPoint;
     }
@@ -92,6 +105,8 @@ public class Segment implements Serializable, SystemElement {
         else
             throw new OutOfWeightRangeException("Вес задается в диапазоне от -1000 до 1000 Н");
     }
+
+    public Point getCenterMass() {return centerMass;}
 
     @Override
     public String toString() {

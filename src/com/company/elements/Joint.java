@@ -9,6 +9,11 @@ public class Joint implements Serializable, SystemElement {
     private  Point installationPoint;     // Точка установки сочленения
     private double  weight;
     private double angleLimit;       // Ограничение угла поворота
+    private Point centerMass = getInstallationPoint();
+
+    public Point getCenterMass() {
+        return centerMass;
+    }
 
     public Joint(double weight, double angleLimit) {
         this.installationPoint = Segment.getStaticStartPoint();
