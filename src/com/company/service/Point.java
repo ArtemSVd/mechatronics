@@ -1,4 +1,4 @@
-package com.company;
+package com.company.service;
 
 import java.io.Serializable;
 
@@ -25,13 +25,5 @@ public class Point implements Serializable {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    @Override
-    public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }
