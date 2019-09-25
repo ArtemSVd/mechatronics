@@ -4,6 +4,7 @@ import com.company.exception.OutOfWeightRangeException;
 import com.company.service.Point;
 import com.company.service.SystemElement;
 
+
 import java.io.*;
 
 
@@ -13,6 +14,8 @@ public class Segment implements Serializable, SystemElement {
     public static Point getStaticStartPoint() {
         return staticStartPoint;
     }
+
+    private boolean right;
 
     private Point startPoint;
     private Point endPoint;
@@ -25,28 +28,35 @@ public class Segment implements Serializable, SystemElement {
     private boolean isInvisible = false;
     private boolean isEphemeral = false;
 
+    private Joint joint;
     // Конструктор приватный -> можем использовать его только в классе
-    private Segment(double length, double weight, double angle) {
+    private Segment(double length, double weight, double angle, Joint joint) {
         this.weight = weight;
         this.length = length;
         this.angle = angle;
+        this.joint = joint;
     }
     // Метод, который возвращает объект
-    public static Segment getSegment(double length, double weight, double angle){
+    public static Segment getSegment(double length, double weight, double angle, Joint joint){
         // Конструируем объект
-        Segment segment = new Segment(length, weight, angle);
+        Segment segment = new Segment(length, weight, angle,joint);
         segment.setStartPoint();
         segment.setEndPoint();
         // Возвращаем сконструированный объект
         return segment;
     }
     // Полиморфный метод устанавливает эфемерность и невидимость для объекта(по умолчанию оба - false)
-    public static Segment getSegment(double length, double weight, double angle, boolean isInvisible,boolean isEphemeral){
-        Segment segment = getSegment(length, weight, angle);
+    public static Segment getSegment(double length, double weight, double angle,Joint joint, boolean isInvisible,boolean isEphemeral){
+        Segment segment = getSegment(length, weight, angle, joint);
         segment.setInvisibility(isInvisible);
         segment.setEphemeral(isEphemeral);
         return segment;
     }
+
+    public boolean isRight() {
+        return right;
+    }
+
     public boolean isInvisible() {
         return isInvisible;
     }
@@ -66,6 +76,9 @@ public class Segment implements Serializable, SystemElement {
     public Point getStartPoint() {
         return startPoint;
     }
+    public Point getEndPoint() {
+        return endPoint;
+    }
 
     private void setStartPoint() {
         // Установка стартовой точки для объекта (конечная точка предыдущего объекта)
@@ -84,10 +97,6 @@ public class Segment implements Serializable, SystemElement {
         centerMass = new Point(x,y);
     }
 
-    public Point getEndPoint() {
-        return endPoint;
-    }
-
     private void setEndPoint() {
         // Как то рассчитываем конечную точку
 
@@ -104,6 +113,27 @@ public class Segment implements Serializable, SystemElement {
             this.weight = weight;
         else
             throw new OutOfWeightRangeException("Вес задается в диапазоне от -1000 до 1000 Н");
+    }
+
+    public void setAngle(double angle) {
+        double a = this.angle + angle;
+        if(joint.getAngleLimit() < a)
+        this.angle += angle;
+
+        if (angle > 0) right = false;
+        else right = true;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
+    }
+
+    public void setEndPoint(Point endPoint) {
+        this.endPoint = endPoint;
     }
 
     public Point getCenterMass() {return centerMass;}

@@ -6,27 +6,39 @@ import com.company.service.SystemElement;
 import java.io.Serializable;
 
 public class Joint implements Serializable, SystemElement {
-    private  Point installationPoint;     // Точка установки сочленения
+    private  Point startPoint;     // Точка установки сочленения
+    private Point endPoint;
     private double  weight;
     private double angleLimit;       // Ограничение угла поворота
-    private Point centerMass = getInstallationPoint();
+    private Point centerMass = getStartPoint();
 
     public Point getCenterMass() {
         return centerMass;
     }
 
     public Joint(double weight, double angleLimit) {
-        this.installationPoint = Segment.getStaticStartPoint();
+        this.startPoint = Segment.getStaticStartPoint();
         this.weight = weight;
         this.angleLimit = angleLimit;
     }
 
-    public Point getInstallationPoint() {
-        return installationPoint;
+    public Point getCenterOfMass(){
+        return startPoint;
     }
 
-    public void setInstallationPoint(Point installationPoint) {
-        this.installationPoint = installationPoint;
+    public Point getStartPoint() {
+        return startPoint;
+    }
+    public Point getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(Point endPoint) {
+        this.endPoint = endPoint;
+    }
+
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
     }
 
     public double getWeight() {
@@ -51,7 +63,7 @@ public class Joint implements Serializable, SystemElement {
     @Override
     public String toString() {
         return "Joint{" +
-                "installationPoint=" + installationPoint +
+                "installationPoint=" + startPoint +
                 ", weight=" + weight +
                 ", angleLimit=" + angleLimit +
                 '}';
