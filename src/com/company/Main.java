@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) throws JointInstallationException {
         MultiLinkSystem multiLinkSystem = MultiLinkSystem.getInstance();
 
+
         multiLinkSystem.addSegment(Segment.getSegment(10,20,30));
         multiLinkSystem.addJoint(new Joint(10,20));
         multiLinkSystem.addSegment(Segment.getSegment(10,20,30));

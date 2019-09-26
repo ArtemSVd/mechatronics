@@ -4,11 +4,11 @@ import com.company.exception.JointInstallationException;
 import com.company.elements.Joint;
 import com.company.elements.Segment;
 import com.company.service.Point;
+import com.company.service.RotateMatrix;
 import com.company.service.SystemElement;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.DoubleToIntFunction;
 
 public class MultiLinkSystem {
 
@@ -16,6 +16,9 @@ public class MultiLinkSystem {
      private Point systemCenterMass;
      private int count = 0; // Кол-во всех элементов (Segments. Joints)
      private static MultiLinkSystem instance;
+    {
+        elementsMap.put(0, new Joint(0,360));
+    }
 
     public MultiLinkSystem() { }  // Приватный конструктор(объект нельзя создать через new)
 
@@ -26,7 +29,6 @@ public class MultiLinkSystem {
         }
         return instance;
     }
-
     // Статический метод для каскадного удаления объектов
     public void deleteElementFromMap(int elemNumber){
         int size = elementsMap.size();
@@ -48,6 +50,8 @@ public class MultiLinkSystem {
     public void addSegment(Segment segment) throws JointInstallationException {
         if(elementsMap.get(count) instanceof Segment) {
             throw new JointInstallationException("Отсутствует сустав!"); }
+        Joint joint = (Joint) elementsMap.get(count);
+
         elementsMap.put(++count,segment);
     }
     // Добавление сочленения
@@ -80,5 +84,22 @@ public class MultiLinkSystem {
 
         systemCenterMass = new Point (x,y);
     }
+    public void update(){
+        Point newEndPoint= null;
+        if(getElement(1) instanceof Segment) {
+            Segment segment = (Segment) getElement(1);
+            RotateMatrix rotateMatrix = new RotateMatrix(segment.getAngle(),segment.isRight());
+            Point newStartPoint = rotateMatrix.getNewCoordinate(segment.getStartPoint());
+             newEndPoint = rotateMatrix.getNewCoordinate(segment.getEndPoint());
+            segment.setStartPoint(newStartPoint);
+            segment.setEndPoint(newEndPoint);
+        }
+        if(getElement(1) instanceof Joint) {
+            Joint joint = (Joint) getElement(1);
+            joint.setStartPoint(newEndPoint);
+            joint.setEndPoint(newEndPoint);
+        }
 
+
+    }
 }
