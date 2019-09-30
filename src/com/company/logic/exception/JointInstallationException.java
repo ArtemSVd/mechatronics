@@ -1,4 +1,4 @@
-package com.company.exception;
+package com.company.logic.exception;
 
 // Исключение связанное с неправильным созданием сочленений между сегментами
 public class JointInstallationException extends Exception {
