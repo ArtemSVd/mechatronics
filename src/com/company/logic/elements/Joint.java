@@ -51,7 +51,7 @@ public class Joint implements Serializable, SystemElement {
         return angleLimit;
     }
 
-    public void setAngleLimit(double angleLimit) {
+    private void setAngleLimit(double angleLimit) {
         this.angleLimit = angleLimit * Math.PI/180;
     }
 

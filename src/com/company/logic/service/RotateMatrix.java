@@ -12,7 +12,7 @@ public class RotateMatrix {
     public Point getNewCoordinate(Point pointInLocalSK, Point pointStart ){
         double[] vector = getVector(pointInLocalSK);
         double[][] rotateMatrix = getRotateMatrix(pointStart);
-        return multiiplyMatrix(vector,rotateMatrix);
+        return multiplyMatrix(vector,rotateMatrix);
     }
     private double[] getVector(Point pointInLocalSK){
         return new double[]{pointInLocalSK.getX(),pointInLocalSK.getY(),1};
@@ -24,7 +24,7 @@ public class RotateMatrix {
                     { pointStart.getX(), pointStart.getY(), 1 }
             };
     }
-    private Point multiiplyMatrix(double[] vector, double[][] rotateMatrix){
+    private Point multiplyMatrix(double[] vector, double[][] rotateMatrix){
         if(isRightSystemCoordinate) {
             double x = vector[0] * rotateMatrix[0][0] + vector[1] * rotateMatrix[1][0] + vector[2] * rotateMatrix[2][0];
             double y = vector[0] * rotateMatrix[0][1] + vector[1] * rotateMatrix[1][1] + vector[2] * rotateMatrix[2][1];
