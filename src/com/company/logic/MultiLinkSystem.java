@@ -31,7 +31,7 @@ public class MultiLinkSystem {
         return instance;
     }
     // метод для каскадного удаления объектов
-    public void removeElmentFromSystem(int elemNumber) {
+    public void removeElementFromSystem(int elemNumber) {
         if (elemNumber > 0) {
             int size = elementsMap.size();
             for (int i = elemNumber; i <= size; i++) {
@@ -57,7 +57,7 @@ public class MultiLinkSystem {
         Segment segment = Segment.getSegment(length,weight,angle,joint,previousSegment,isInvisible,isEphemeral);
 
         elementsMap.put(++count,segment);
-        setSystemCenterMass();
+       // setSystemCenterMass();
     }
     // Добавление сочленения
     public void addJoint(double weight, double angleLimit) throws JointInstallationException, OutOfValueRangeException {
@@ -66,7 +66,7 @@ public class MultiLinkSystem {
         Segment previousSegment = (Segment) getElement(count);
         Joint joint = new Joint(weight,angleLimit,previousSegment);
         elementsMap.put(++count,joint);
-        setSystemCenterMass();
+        //setSystemCenterMass();
     }
     // Метод для получения конкретного элемента
     public SystemElement getElement(int elemNumber){
@@ -100,6 +100,6 @@ public class MultiLinkSystem {
         for (int i = num; i < elementsMap.size(); i++) {
             getElement(i).update();
         }
-        setSystemCenterMass();
+      //  setSystemCenterMass();
     }
 }

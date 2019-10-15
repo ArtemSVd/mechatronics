@@ -8,7 +8,9 @@ import com.company.logic.exception.OutOfValueRangeException;
 import com.company.logic.service.Point;
 import com.company.logic.service.RotateMatrix;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
@@ -16,6 +18,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 
 
 public class Gui extends Application {
@@ -29,13 +32,12 @@ public class Gui extends Application {
         Application.launch(args);
     }
     @Override
-    public void start(Stage primaryStage) throws JointInstallationException, OutOfValueRangeException {
-        Group root = new Group();
-        addElements();
-        readElem(root);
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("main_form.fxml"));
 
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root,400,400));
+        primaryStage.setTitle("Mechatronics");
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
     private void createLine(int id, Segment segment, Group root){
