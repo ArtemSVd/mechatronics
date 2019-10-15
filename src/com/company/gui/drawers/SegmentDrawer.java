@@ -8,21 +8,26 @@ import javafx.scene.shape.Line;
 
 public class SegmentDrawer {
 
-    private static final Point INSTALLATION_POINT = new Point(200,200);
+    private  final Point installationPoint;
 
-    public static Line createLine(int id, Segment segment){
+    public SegmentDrawer(Point point) {
+        this.installationPoint = point;
+    }
+
+    public Line createLine(int id, Segment segment){
         double radianAngle = 90*Math.PI/180;
 
         RotateMatrix rotateMatrix = new RotateMatrix(radianAngle, false);
 
-        Point newStartPoint = rotateMatrix.getNewCoordinate(segment.getStartPoint(), INSTALLATION_POINT);
-        Point newEndPoint = rotateMatrix.getNewCoordinate(segment.getEndPoint(),INSTALLATION_POINT);
+        Point newStartPoint = rotateMatrix.getNewCoordinate(segment.getStartPoint(), new Point(200,200));
+        Point newEndPoint = rotateMatrix.getNewCoordinate(segment.getEndPoint(), new Point(200,200));
 
         Line line = new Line(newStartPoint.getX(),newStartPoint.getY(),newEndPoint.getX(),newEndPoint.getY());
+
         line.setStrokeWidth(7);
         line.setStroke(Color.BLACK);
         line.setId(String.valueOf(id));
-
+        System.out.println("segment created");
        return line;
     }
 }

@@ -21,8 +21,7 @@ public class Point implements Serializable {
 
     @Override
     public String toString() {
-        return "Point{" +
-                "x=" + Math.round(x) +
+        return "{x=" + Math.round(x) +
                 ", y=" + Math.round(y) +
                 '}';
     }

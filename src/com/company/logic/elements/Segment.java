@@ -159,13 +159,14 @@ public class Segment implements Serializable, SystemElement {
 
     @Override
     public String toString() {
-        return "Segment{" +
-                "startPoint=" + startPoint.toString() +
-                ", endPoint=" + endPoint.toString() +
-                ", angle deg=" + 180*angle/Math.PI +
-                ", angle rad=" + angle +
-                 +
-                '}';
+        return "Segment \n" +
+                "  startPoint=" + startPoint +
+                "\n  endPoint=" + endPoint +
+                "\n  weight=" + weight +
+                "\n  length=" + length +
+                "\n  angle=" + 180*angle/Math.PI +
+                "\n  isInvisible=" + isInvisible +
+                "\n  isEphemeral=" + isEphemeral;
     }
 
     @Override

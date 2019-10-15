@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mechatronics.iml" filepath="$PROJECT_DIR$/mechatronics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/2D Engine.iml" filepath="$PROJECT_DIR$/.idea/2D Engine.iml" />
     </modules>
   </component>
 </project>

@@ -7,14 +7,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class JointDrawer {
-    private static final Point INSTALLATION_POINT = new Point(200,200);
-    private static final double CIRCLE_RADIUS = 10;
+    private final Point installationpoint ;
+    private static final double CIRCLE_RADIUS = 5;
 
-    public static Circle createCircle(int id, Joint joint){
+    public JointDrawer(Point installationpoint) {
+        this.installationpoint = installationpoint;
+    }
+
+    public  Circle createCircle(int id, Joint joint){
         double radianAngle = 90*Math.PI/180;
         RotateMatrix rotateMatrix = new RotateMatrix(radianAngle,false);
 
-        Point newStartPoint = rotateMatrix.getNewCoordinate(joint.getStartPoint(),INSTALLATION_POINT);
+        Point newStartPoint = rotateMatrix.getNewCoordinate(joint.getStartPoint(),new Point(200,200));
 
         Circle circle = new Circle(newStartPoint.getX(),newStartPoint.getY(),CIRCLE_RADIUS);
 
@@ -25,7 +29,7 @@ public class JointDrawer {
 
         circle.setStrokeWidth(5);
         circle.setId(String.valueOf(id));
-
+        System.out.println("Create joint");
         return circle;
     }
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -32,7 +33,7 @@ public class Gui extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main_form.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("controllers/main_form.fxml"));
 
 
         primaryStage.setTitle("Mechatronics");
@@ -41,36 +42,36 @@ public class Gui extends Application {
         primaryStage.show();
     }
     private void addElements() throws JointInstallationException, OutOfValueRangeException {
-        system.addSegment(50,20,180,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,210,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,90,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,180,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,60,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,90,false,false);
-        system.addJoint(50,360);
-        system.addSegment(50,20,10,false,false);
-        Segment segment =(Segment) system.getElement(9);
-        segment.setAngle(90);
-        system.updateFrom(9);
+//        system.addSegment(50,20,180,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,210,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,90,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,180,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,60,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,90,false,false);
+//        system.addJoint(50,360);
+//        system.addSegment(50,20,10,false,false);
+//        Segment segment =(Segment) system.getElement(9);
+//        segment.setAngle(90);
+//        system.updateFrom(9);
     }
-    private void readElem(Group root){
-        for(int i = 1; i < system.getAllElements().size();i +=2) {
+    private void readElem(FlowPane root){
+        for(int i = 2; i < system.getAllElements().size();i +=2) {
             if (system.getElement(i) instanceof Segment) {
                 Segment segment = (Segment) system.getElement(i);
-                Line line = SegmentDrawer.createLine(i,segment);
-                root.getChildren().add(line);
+          //      Line line = SegmentDrawer.createLine(i,segment);
+            //    root.getChildren().add(line);
             }
         }
-        for(int i = 0; i < system.getAllElements().size();i+=2) {
+        for(int i = 1; i < system.getAllElements().size();i+=2) {
             if(system.getElement(i) instanceof Joint){
                 Joint joint = (Joint) system.getElement(i);
-                Circle circle = JointDrawer.createCircle(i,joint);
-                root.getChildren().add(circle);
+            //    Circle circle = JointDrawer.createCircle(i,joint);
+             //   root.getChildren().add(circle);
             }
         }
     }

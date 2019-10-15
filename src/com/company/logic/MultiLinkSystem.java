@@ -17,14 +17,14 @@ public class MultiLinkSystem {
      private static MultiLinkSystem instance;
 
      //Добавляем нулевой сустав( без огрничений поворота)
-    {
-        elementsMap.put(0, new Joint(0,360,null));
-    }
+//    {
+//        elementsMap.put(0, new Joint(0,360,null));
+//    }
 
-    private MultiLinkSystem() throws OutOfValueRangeException { }  // Приватный конструктор(объект нельзя создать через new)
+    private MultiLinkSystem()  { }  // Приватный конструктор(объект нельзя создать через new)
 
     // Метод возвращает единственно-возможный объект(синглтон)
-    public static MultiLinkSystem getInstance() throws OutOfValueRangeException {
+    public static MultiLinkSystem getInstance()  {
         if(instance == null){
             instance = new MultiLinkSystem();
         }
@@ -49,24 +49,17 @@ public class MultiLinkSystem {
         count = elementsMap.size();
     }
     // Добавление сегмента
-    public void addSegment(double length, double weight, double angle, boolean isInvisible,boolean isEphemeral) throws JointInstallationException, OutOfValueRangeException {
-        if(elementsMap.get(count) instanceof Segment) {
-            throw new JointInstallationException("Отсутствует сустав!"); }
+    public void addSegment(double length, double weight, double angle, boolean isInvisible,boolean isEphemeral) throws  OutOfValueRangeException {
         Joint joint = (Joint) elementsMap.get(count);
         Segment previousSegment =count-1 < 1? null : (Segment) elementsMap.get(count -1);
         Segment segment = Segment.getSegment(length,weight,angle,joint,previousSegment,isInvisible,isEphemeral);
 
         elementsMap.put(++count,segment);
-<<<<<<< HEAD
         //setSystemCenterMass();
-=======
-       // setSystemCenterMass();
->>>>>>> 237773bb51d29afa7335bca67518b6a3ec865409
+
     }
     // Добавление сочленения
-    public void addJoint(double weight, double angleLimit) throws JointInstallationException, OutOfValueRangeException {
-        if(elementsMap.get(count) instanceof Joint) {
-            throw new JointInstallationException("Невозможно установить сустав на сустав!"); }
+    public void addJoint(double weight, double angleLimit) throws OutOfValueRangeException {
         Segment previousSegment = (Segment) getElement(count);
         Joint joint = new Joint(weight,angleLimit,previousSegment);
         elementsMap.put(++count,joint);
@@ -104,10 +97,7 @@ public class MultiLinkSystem {
         for (int i = num; i < elementsMap.size(); i++) {
             getElement(i).update();
         }
-<<<<<<< HEAD
         //setSystemCenterMass();
-=======
-      //  setSystemCenterMass();
->>>>>>> 237773bb51d29afa7335bca67518b6a3ec865409
+
     }
 }
