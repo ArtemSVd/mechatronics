@@ -3,6 +3,4 @@ module mechatronics {
     requires javafx.fxml;
     requires javafx.controls;
     exports com.company.gui;
-
-    //requires kotlin.stdlib;
 }
