@@ -19,13 +19,18 @@ public class SegmentDrawer {
 
         RotateMatrix rotateMatrix = new RotateMatrix(radianAngle, false);
 
-        Point newStartPoint = rotateMatrix.getNewCoordinate(segment.getStartPoint(), new Point(200,200));
-        Point newEndPoint = rotateMatrix.getNewCoordinate(segment.getEndPoint(), new Point(200,200));
+        Point newStartPoint = rotateMatrix.getNewCoordinate(segment.getStartPoint(), installationPoint);
+        Point newEndPoint = rotateMatrix.getNewCoordinate(segment.getEndPoint(), installationPoint);
 
         Line line = new Line(newStartPoint.getX(),newStartPoint.getY(),newEndPoint.getX(),newEndPoint.getY());
 
         line.setStrokeWidth(7);
-        line.setStroke(Color.BLACK);
+        if(!segment.isInvisible()) {
+            line.setStroke(Color.BLACK);
+        }
+        else{
+            line.setStroke(Color.valueOf("#d3d3d3"));
+        }
         line.setId(String.valueOf(id));
         System.out.println("segment created");
        return line;

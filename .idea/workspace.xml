@@ -128,7 +128,8 @@
       <workItem from="1570107567352" duration="1817000" />
       <workItem from="1571149643461" duration="7084000" />
       <workItem from="1571161526280" duration="148000" />
-      <workItem from="1571161680941" duration="7703000" />
+      <workItem from="1571161680941" duration="9472000" />
+      <workItem from="1571211164579" duration="4787000" />
     </task>
     <task id="LOCAL-00001" summary="1. Добавлен метод расчета матрицы поворота&#10;2. Частично реализован метод обновления параметров элементов">
       <created>1569412532466</created>
@@ -163,11 +164,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/company/gui/controllers/EditController.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/company/gui/drawers/SegmentDrawer.java</url>
           <line>19</line>

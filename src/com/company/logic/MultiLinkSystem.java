@@ -51,8 +51,7 @@ public class MultiLinkSystem {
     // Добавление сегмента
     public void addSegment(double length, double weight, double angle, boolean isInvisible,boolean isEphemeral) throws  OutOfValueRangeException {
         Joint joint = (Joint) elementsMap.get(count);
-        Segment previousSegment =count-1 < 1? null : (Segment) elementsMap.get(count -1);
-        Segment segment = Segment.getSegment(length,weight,angle,joint,previousSegment,isInvisible,isEphemeral);
+        Segment segment = Segment.getSegment(length,weight,angle,joint,isInvisible,isEphemeral);
 
         elementsMap.put(++count,segment);
         //setSystemCenterMass();

@@ -18,18 +18,17 @@ public class JointDrawer {
         double radianAngle = 90*Math.PI/180;
         RotateMatrix rotateMatrix = new RotateMatrix(radianAngle,false);
 
-        Point newStartPoint = rotateMatrix.getNewCoordinate(joint.getStartPoint(),new Point(200,200));
+        Point newStartPoint = rotateMatrix.getNewCoordinate(joint.getStartPoint(),installationpoint);
 
         Circle circle = new Circle(newStartPoint.getX(),newStartPoint.getY(),CIRCLE_RADIUS);
 
-        if(id == 0)
+        if(id == 1)
             circle.setStroke(Color.RED);
         else
             circle.setStroke(Color.GREEN);
 
         circle.setStrokeWidth(5);
-        circle.setId(String.valueOf(id));
-        System.out.println("Create joint");
+        System.out.println("joint created");
         return circle;
     }
 }

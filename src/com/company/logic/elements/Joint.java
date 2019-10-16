@@ -6,6 +6,8 @@ import com.company.logic.service.Point;
 import java.io.Serializable;
 
 public class Joint implements Serializable, SystemElement {
+     static double staticAngleLSK = 0;
+    private double angleLSK = staticAngleLSK;
 
     private final Segment previousSegment;
 
@@ -20,6 +22,7 @@ public class Joint implements Serializable, SystemElement {
         this.startPoint = previousSegment==null? new Point(0,0) :previousSegment.getEndPoint();
         setWeight(weight);
         setAngleLimit(angleLimit);
+        updateAngleLSK();
     }
 
     @Override
@@ -41,10 +44,10 @@ public class Joint implements Serializable, SystemElement {
     }
 
     public void setWeight(double weight) throws OutOfValueRangeException {
-        if(weight < 1000 && weight > -1000)
+        if(weight <= 1000 && weight >= -1000)
             this.weight = weight;
         else
-            throw new OutOfValueRangeException("Вес задается в диапазоне от -1000 до 1000 Н");
+            throw new OutOfValueRangeException("The weight is set in the range from -1000 to 1000");
     }
 
     public double getAngleLimit() {
@@ -55,17 +58,30 @@ public class Joint implements Serializable, SystemElement {
         this.angleLimit = angleLimit * Math.PI/180;
     }
 
+    public double getAngleLSK() {
+        return angleLSK;
+    }
+
+    private void setAngleLSK(double angleLSK) {
+        this.angleLSK = angleLSK;
+    }
+
+    private void updateAngleLSK(){
+        double stAngleLSK = previousSegment==null? 0 : previousSegment.getAngleLSK() + Math.PI/2 - previousSegment.getAngle();
+        setAngleLSK(previousSegment == null ? 0 : stAngleLSK);
+        staticAngleLSK =stAngleLSK;
+    }
+
     @Override
     public void update( ) {
-        if(previousSegment != null)
-            setStartPoint(previousSegment.getEndPoint());
+        updateAngleLSK();
+        setStartPoint(previousSegment == null ? new Point(0,0) : previousSegment.getEndPoint());
     }
     @Override
     public String toString() {
-        return "Joint{" +
-                "installationPoint=" + startPoint +
-                ", weight=" + weight +
-                ", angleLimit=" + angleLimit +
-                '}';
+        return "Joint" +
+                "\n  installationPoint=" + startPoint +
+                "\n  weight=" + weight +
+                "\n  angleLimit=" + 180*angleLimit/Math.PI;
     }
 }

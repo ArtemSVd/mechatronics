@@ -1,8 +1,8 @@
 package com.company.gui.controllers;
 import com.company.logic.MultiLinkSystem;
 import com.company.logic.exception.OutOfValueRangeException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -12,7 +12,7 @@ import static com.company.utils.Utility.getDoubleValue;
 
 public class AddController {
 
-    MultiLinkSystem system = MultiLinkSystem.getInstance();
+    private MultiLinkSystem system = MultiLinkSystem.getInstance();
     @FXML
     public TextField length;
     @FXML
@@ -32,12 +32,11 @@ public class AddController {
     @FXML
     public Button okButton;
     @FXML
-    public void close(ActionEvent event){
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+    public void close(){
+        closeForm();
     }
     @FXML
-    public void addElements(ActionEvent event){
+    public void addElements(){
         double length = getDoubleValue(this.length);
         double angle = getDoubleValue(this.angle);
         double weightSegment = getDoubleValue(this.segmentWeight);
@@ -46,14 +45,33 @@ public class AddController {
         boolean isInvisible = invisible.isSelected();
         boolean isEphemeral = ephemeral.isSelected();
 
+        boolean isJointException = false;
         try {
             system.addJoint(weightJoint,limit);
-            system.addSegment(length,weightSegment,angle,isInvisible,isEphemeral);
         } catch (OutOfValueRangeException e) {
-            e.printStackTrace();
+            isJointException = true;
+            showAlert(e.getMessage());
         }
+
+        try {
+            if(!isJointException) {
+                system.addSegment(length, weightSegment, angle, isInvisible, isEphemeral);
+            }
+        } catch (OutOfValueRangeException e) {
+            system.removeElementFromSystem(system.getAllElements().size());
+            showAlert(e.getMessage());
+        }
+        closeForm();
+    }
+
+    private void showAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void closeForm(){
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-
     }
 }
