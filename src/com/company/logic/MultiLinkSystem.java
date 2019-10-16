@@ -37,7 +37,7 @@ public class MultiLinkSystem {
             for (int i = elemNumber; i <= size; i++) {
                 elementsMap.remove(i);
             }
-            count -= size - elemNumber;
+            count -= size - elemNumber + 1;
         }
     }
     public Map<Integer, SystemElement> getAllElements() {
@@ -93,7 +93,7 @@ public class MultiLinkSystem {
         systemCenterMass = new Point (x,y);
     }
     public void updateFrom(int num){
-        for (int i = num; i < elementsMap.size(); i++) {
+        for (int i = num; i <= elementsMap.size(); i++) {
             getElement(i).update();
         }
         //setSystemCenterMass();
