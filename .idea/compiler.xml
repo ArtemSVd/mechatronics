@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="2D Engine" />
+        <module name="mechatronics" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="2D Engine" target="11" />
+      <module name="mechatronics" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

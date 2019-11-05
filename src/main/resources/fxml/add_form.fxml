@@ -17,7 +17,7 @@
                   <Insets left="10.0" top="10.0" />
                </FlowPane.margin>
             </Label>
-            <TextField fx:id="lengthTextField" prefHeight="26.0" prefWidth="140.0" text="90">
+            <TextField fx:id="lengthTextField" prefHeight="26.0" prefWidth="140.0" text="50">
                <FlowPane.margin>
                   <Insets left="30.0" top="10.0" />
                </FlowPane.margin>

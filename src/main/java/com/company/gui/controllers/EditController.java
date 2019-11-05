@@ -6,6 +6,7 @@ import com.company.gui.drawers.SegmentDrawer;
 import com.company.logic.MultiLinkSystem;
 import com.company.logic.elements.Joint;
 import com.company.logic.elements.Segment;
+import com.company.logic.exception.OutOfValueRangeException;
 import com.company.logic.service.FileService;
 import com.company.logic.service.Point;
 import javafx.fxml.FXML;
@@ -28,13 +29,8 @@ import static com.company.utils.Utility.isIntersected;
 
 public class EditController {
 
-    private MultiLinkSystem system = MultiLinkSystem.getInstance();
     @FXML
     public TextArea info;
-    @FXML
-    public TextField length;
-    @FXML
-    public TextField angle;
     @FXML
     public TextField limit;
     @FXML
@@ -51,27 +47,35 @@ public class EditController {
     public AnchorPane canvas;
     @FXML
     public CheckBox centerMassCheck;
+    @FXML
+    public Slider lengthSlider;
+    @FXML
+    public Slider angleSlider;
 
     private int selectedElements;
     private double scale = 1;
     private List<Line> listLine = new ArrayList<>();
+    private MultiLinkSystem system = MultiLinkSystem.getInstance();
 
-    /**
-     * Метод для увеличения угла поворота сегмента, при нажати на кнопку "+".
-     */
     @FXML
-    public void onPlusAngleClick() {
-        setAngle(getDoubleValue(angle));
+    public void slideAngle() {
+        Segment segment = (Segment) system.getElement(selectedElements);
+
+        segment.setAngle(angleSlider.getValue());
+
+        system.updateFrom(selectedElements - 1);
         showInfo();
         redrawing();
     }
-
-    /**
-     * Метод для уменьшения угла поворота сегмента, при нажати на кнопку "-".
-     */
     @FXML
-    public void onMinusAngleClick() {
-        setAngle(-getDoubleValue(angle));
+    public void slideLength() {
+        Segment segment = (Segment) system.getElement(selectedElements);
+        try {
+            segment.setLength(lengthSlider.getValue());
+        } catch (OutOfValueRangeException e) {
+            e.printStackTrace();
+        }
+        system.updateFrom(selectedElements - 1);
         showInfo();
         redrawing();
     }
@@ -145,7 +149,6 @@ public class EditController {
         Joint joint = (Joint) system.getElement(selectedElements - 1);
 
         try {
-            segment.setLength(getDoubleValue(this.length));
             segment.setWeight(getDoubleValue(this.weightSegment));
             segment.setInvisibility(invisibleCheck.isSelected());
             segment.setEphemeral(ephemeralCheck.isSelected());
@@ -177,20 +180,17 @@ public class EditController {
      * @param line линия, которая будет проверяться
      */
     private void checkBorder(Line line){
-
         double height = canvas.getHeight();
         double width = canvas.getWidth();
 
-
         double endX = (line.getEndX()) * scale;
         double endY = (line.getEndY()) * scale;
-        while(endX >= width-80 || endY >= height || endX <= 0 || endY <= 0) {
+        while(endX >= width-40 || endY >= height || endX <= 0 || endY <= 0) {
 
             if(scale < 0.3) break;
             scale -= 0.1;
             endX = (line.getEndX()) * scale;
             endY = (line.getEndY()) * scale;
-
 
         }
         canvas.setScaleX(scale);
@@ -233,8 +233,12 @@ public class EditController {
      * @param segment выбранный сегмент
      */
     private void setParametersForSegment(Segment segment){
-        length.setText(String.valueOf(segment.getLength()));
-        angle.setText("1");
+        lengthSlider.setValue(segment.getLength());
+
+        angleSlider.setMin(0);
+        angleSlider.setMax(segment.getAngleLimitFromJoint());
+        angleSlider.setValue(180*segment.getAngle()/Math.PI);
+
         weightSegment.setText(String.valueOf(segment.getWeight()));
         invisibleCheck.setSelected(segment.isInvisible());
         ephemeralCheck.setSelected(segment.isEphemeral());
@@ -323,17 +327,6 @@ public class EditController {
 
             root.getChildren().add(centerMass);
         }
-    }
-
-    /**
-     * Метод для увеличения или уменьшения угла поворота.
-     * @param angle угол на который нужно изменить
-     *              существующее значение угла
-     */
-    private void setAngle(double angle) {
-        Segment segment = (Segment) system.getElement(selectedElements);
-        segment.setAngle(angle);
-        system.updateFrom(selectedElements);
     }
 
     /**

@@ -18,7 +18,7 @@ public class Segment implements Serializable, SystemElement {
     private boolean isInvisible = false;
     private boolean isEphemeral = false;
 
-    private  Joint previousJoint;
+    private Joint previousJoint;
 
     // Конструктор приватный -> можем использовать его только в классе
     private Segment(double length, double weight, double angle ) throws OutOfValueRangeException {
@@ -88,7 +88,7 @@ public class Segment implements Serializable, SystemElement {
     }
 
     public void setAngle(double angle) {
-        double radianAngle = angle * Math.PI/180 + this.angle;
+        double radianAngle = angle * Math.PI/180 ;
         double radMod = radianAngle >= 0? radianAngle : (radianAngle + 2*Math.PI);
 
         if(previousJoint.getAngleLimit() >= radMod)
@@ -137,13 +137,16 @@ public class Segment implements Serializable, SystemElement {
             throw new OutOfValueRangeException("The weight is set in the range from -1000 to 1000");
     }
 
+    public double getAngleLimitFromJoint() {
+        return 180*previousJoint.getAngleLimit()/Math.PI;
+    }
     @Override
     public String toString() {
         return "Segment \n" +
                 "  startPoint=" + startPoint +
                 "\n  endPoint=" + endPoint +
                 "\n  weight=" + weight +
-                "\n  length=" + length +
+                "\n  length=" + Math.round(length) +
                 "\n  angle=" + Math.round(180*angle/Math.PI) +
                 "\n  isInvisible=" + isInvisible +
                 "\n  isEphemeral=" + isEphemeral;
