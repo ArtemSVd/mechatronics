@@ -65,6 +65,7 @@ public class EditController {
 
         system.updateFrom(selectedElements - 1);
         showInfo();
+        scale = 1;
         redrawing();
     }
     @FXML
@@ -77,6 +78,7 @@ public class EditController {
         }
         system.updateFrom(selectedElements - 1);
         showInfo();
+        scale = 1;
         redrawing();
     }
 
@@ -185,7 +187,7 @@ public class EditController {
 
         double endX = (line.getEndX()) * scale;
         double endY = (line.getEndY()) * scale;
-        while(endX >= width-40 || endY >= height || endX <= 0 || endY <= 0) {
+        while(endX >= width-40 || endY >= height-40 || endX <= 40 || endY <= 40) {
 
             if(scale < 0.3) break;
             scale -= 0.1;

@@ -1,6 +1,5 @@
 package com.company.utils;
 
-import com.company.logic.elements.Segment;
 import com.company.logic.service.Point;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Line;
@@ -23,7 +22,6 @@ public class Utility {
                         -
                         (endFirstLine.getY() - startFirstLine.getY()) * (endSecondLine.getX() - startSecondLine.getX());
 
-        if (common == 0) return false; //они параллельны
 
         double rH =
                 (startFirstLine.getY() - startSecondLine.getY()) * (endSecondLine.getX() - startSecondLine.getX())
