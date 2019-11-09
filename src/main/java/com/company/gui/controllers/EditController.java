@@ -59,27 +59,35 @@ public class EditController {
 
     @FXML
     public void slideAngle() {
-        Segment segment = (Segment) system.getElement(selectedElements);
+        if (selectedElements != 0) {
+            Segment segment = (Segment) system.getElement(selectedElements);
 
-        segment.setAngle(angleSlider.getValue());
+            segment.setAngle(angleSlider.getValue());
 
-        system.updateFrom(selectedElements - 1);
-        showInfo();
-        scale = 1;
-        redrawing();
+            system.updateFrom(selectedElements - 1);
+
+            showInfo();
+            scale = 1;
+            redrawing();
+        }
     }
     @FXML
     public void slideLength() {
-        Segment segment = (Segment) system.getElement(selectedElements);
-        try {
-            segment.setLength(lengthSlider.getValue());
-        } catch (OutOfValueRangeException e) {
-            e.printStackTrace();
+        if (selectedElements != 0) {
+            Segment segment = (Segment) system.getElement(selectedElements);
+
+            try {
+                segment.setLength(lengthSlider.getValue());
+            } catch (OutOfValueRangeException e) {
+                e.printStackTrace();
+            }
+
+            system.updateFrom(selectedElements - 1);
+
+            showInfo();
+            scale = 1;
+            redrawing();
         }
-        system.updateFrom(selectedElements - 1);
-        showInfo();
-        scale = 1;
-        redrawing();
     }
 
     /**
@@ -187,10 +195,10 @@ public class EditController {
 
         double endX = (line.getEndX()) * scale;
         double endY = (line.getEndY()) * scale;
-        while(endX >= width-40 || endY >= height-40 || endX <= 40 || endY <= 40) {
+        while(endX >= width-40 || endY >= height-40 || endX <= 40 || endY <= 0) {
 
-            if(scale < 0.3) break;
-            scale -= 0.1;
+            if(scale < 0.5) break;
+            scale -= 0.01;
             endX = (line.getEndX()) * scale;
             endY = (line.getEndY()) * scale;
 
@@ -261,9 +269,9 @@ public class EditController {
      * @param startCoordinate точка начала координат
      */
     private void drawAllElem(AnchorPane root,Point startCoordinate){
-        drawCenterMass(root, startCoordinate);
         drawSegments(root, startCoordinate);
         drawJoints(root, startCoordinate);
+        drawCenterMass(root, startCoordinate);
 
         if(listLine.size() >= 2) {
             checkIntersects();

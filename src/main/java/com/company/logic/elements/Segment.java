@@ -117,9 +117,7 @@ public class Segment implements Serializable, SystemElement {
         double x = (ax + bx)/2;
         double y = (ay + by)/2;
 
-        Point centerMassInLocalSK = new Point(x,y);
-        RotateMatrix matrix = new RotateMatrix(getAngleLSK(),true);
-        return matrix.getNewCoordinate(centerMassInLocalSK,startPoint);
+        return new Point(x,y);
     }
 
     public double getAngleLSK() {

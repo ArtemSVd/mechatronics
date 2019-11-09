@@ -2,6 +2,7 @@ package com.company.logic.elements;
 
 import com.company.logic.exception.OutOfValueRangeException;
 import com.company.logic.service.Point;
+import com.company.logic.service.RotateMatrix;
 
 import java.io.Serializable;
 

@@ -1,6 +1,7 @@
 package com.company.gui.drawers;
 
 import com.company.logic.MultiLinkSystem;
+import com.company.logic.elements.Segment;
 import com.company.logic.service.Point;
 import com.company.logic.service.RotateMatrix;
 import javafx.scene.paint.Color;
